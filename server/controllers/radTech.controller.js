@@ -22,7 +22,7 @@ module.exports = {
     findAllRadTechs: (req, res) => {
         RadTech.find({})
             .then(allRadTechs => {
-                console.log(allRadTechs)
+                // console.log(allRadTechs)
                 res.json({radTechs: allRadTechs})
             })
             .catch(err => {
