@@ -33,7 +33,7 @@ module.exports = {
 
     //Read one
     findOneRadTech: (req, res) => {
-        //console.log(req)
+        console.log("THIS IS FIND ONE REQ", req)
         //within request body is a key called params and the value is going to be id (route /:id)
         //if it finds the matching object id in our collection, it responds w/it, else returns error
         RadTech.findById(req.params.id)
@@ -42,7 +42,7 @@ module.exports = {
                 //make object if want key to be named differently
             })
             .catch((err) => {
-                console.log("findOne error", err);
+                console.log("findOne error", err, "THIS IS FIND ONE REQ", req );
                 res.status(400).json({message: 'Something went wrong', error: err});
             });
     },

@@ -1,5 +1,6 @@
 import React, {useState} from 'react'
 import axios from 'axios'
+import {useNavigate} from 'react-router-dom'; //to refresh route after form completed and display created
 
 const RadTechForm = () => {
 
@@ -39,6 +40,8 @@ const RadTechForm = () => {
         return isValid
     }
 
+    const navigate = useNavigate();
+
     //We have two options to get data to back-end. 
     //Both ways require axios imported to communicate w/server
 
@@ -51,6 +54,7 @@ const RadTechForm = () => {
                 .then(res => console.log(res))
                 .catch(err =>console.log(err))
                 setHasBeenSubmitted(true);
+                navigate("/")
         }
         else {
             setErrors({
@@ -73,8 +77,8 @@ const RadTechForm = () => {
 
 
     return (
-        <div className="row">
-            <h1>Add Rad Tech</h1>
+        <div className="mt-5 bg-white col-6 mx-auto p-3 border border-dark rounded">
+            <h2>Add Rad Tech</h2>
 
             <form action="" className="col md-6 mx-auto" onSubmit={submitHandler}>
 
@@ -104,7 +108,7 @@ const RadTechForm = () => {
                     {errors.modality ? <p className="text-danger">{errors.modality}</p> : ""}
                 </div>
 
-                <button className="btn btn-info mt-3">Create Rad Tech</button>
+                <button className="btn btn-secondary mt-3">Create Rad Tech</button>
             </form>
         </div>
     )
