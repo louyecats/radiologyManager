@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 //useEffect to query database and useState to store that data somehwere to iterate through
 import axios from 'axios';
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, Link} from 'react-router-dom'
 
 
 
@@ -20,7 +20,11 @@ const ViewAll = () => {
     //delete
     const deleteRadTech = (id) => {
         axios.delete(`http://localhost:8000/api/radtechs/${id}`)
-            .then(res => console.log(res))
+            .then(res => {
+                const filteredRadTechs = radTechs.filter(tech => tech._id !== id) //get all the players who's id's don't match id just deleted and set the in state
+                setRadTechs(filteredRadTechs)
+                console.log(res)
+            })
             .catch(err => console.log(err))
         navigate("/")
     }
@@ -43,10 +47,12 @@ const ViewAll = () => {
                 {radTechs.map((tech) => {
                     return (
                         <tr key={tech._id}>
-                            <td>{tech.firstName}</td>
+                            <td><Link to={`${tech._id}`}>{tech.firstName}</Link></td> 
+                            {/* same as {`/api/radtechs/${tech._id}`} */}
                             <td>{tech.lastName}</td>
                             <td>{tech.modality}</td>
                             <td colSpan="2">
+
                                 <a href={`http://localhost:3000/api/radtechs/${tech._id}`} className=" btn btn-secondary">View</a>
                                 <button className="btn btn-danger" onClick={(e) => deleteRadTech(tech._id)}>Delete</button>
                                 {/* you MUST have onclick={(e)=> before the delete function or when you click the delete button, javascript will auto select all buttons and delete everyone! */}

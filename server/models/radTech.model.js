@@ -25,19 +25,19 @@ const RadTechSchema = new mongoose.Schema({
     },
     firstShiftStatus: {
         type: String, 
-        enum: ["Undecided","Woring","Not Working"],
+        enum: ["Undecided","Working","Not Working"],
         required: [true, "First shift status requried"],
         default: "Undecided" //give default value in case want to decide shift later
     },
     secondShiftStatus: {
         type: String, 
-        enum: ["Undecided","Woring","Not Working"],
+        enum: ["Undecided","Working","Not Working"],
         required: [true, "Second shift status requried"],
         default: "Undecided" //give default value in case want to decide shift later
     },
     thirdShiftStatus: {
         type: String, 
-        enum: ["Undecided","Woring","Not Working"],
+        enum: ["Undecided","Working","Not Working"],
         required: [true, "Third shift status requried"],
         default: "Undecided" //give default value in case want to decide shift later
     }

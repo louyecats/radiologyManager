@@ -5,17 +5,18 @@ import {useParams, useNavigate} from 'react-router-dom';
 
 const ViewOne = () => {
 
-    const {id} = useParams(); //params is to grab the id from route
+    const {id} = useParams(); //access value from route w/ useParams, import it from react-router-dom
     const navigate = useNavigate(); //to redirect after delete method ran
-    const [radTech, setRadTech] = useState({}); //object is returned
+    const [radTech, setRadTech] = useState({}); //place data in state that's returend from get() method as an object
 
+    //use axios get() to grab the specific id's object data from back-end/DB, then place in state to have access/display current values
     useEffect(() => {
         axios.get(`http://localhost:8000/api/radtechs/${id}`)
-            .then( res => {
+            .then(res => {
                 console.log(res.data.radTech); //use .radTech bc placed in object on controller method
                 setRadTech(res.data.radTech);
             })
-            .catch( err => console.log(err) );
+            .catch(err => console.log(err));
     }, []); //always have empty dependency  array so runs get() when component mounts
 
     //delete
@@ -34,7 +35,8 @@ const ViewOne = () => {
             <p className="mt-4"><b>First Shift Status:</b> {radTech.firstShiftStatus}</p>
             <p className="mt-4"><b>Second Shift Status:</b> {radTech.secondShiftStatus}</p>
             <p className="mt-4"><b>Third Shift Status:</b> {radTech.thirdShiftStatus}</p>
-            <button className="btn btn-info mt-3" onClick={deleteRadTech}>Update</button>
+            <a href="/" className=" btn btn-secondary mt-3">Home</a>
+            <a href={`http://localhost:3000/api/radtechs/edit/${radTech._id}`} className=" btn btn-info mt-3">Update</a>
             <button className="btn btn-danger mt-3" onClick={deleteRadTech}>Delete</button>
         </div>
     )
