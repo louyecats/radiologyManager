@@ -1,8 +1,8 @@
 import './App.css';
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
+import {useState} from 'react';
 import ViewOne from './components/ViewOne';
 import Main from '../src/views/Main';
-import {useState} from 'react';
 import Update from './components/Update';
 
 

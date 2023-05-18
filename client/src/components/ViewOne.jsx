@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react'
 //useEffect to query database and useState to store that data somewhere to iterate through
 import axios from 'axios' //to make request to back-end to retrieve data
 import {useParams, useNavigate} from 'react-router-dom';
+import NavBar from './NavBar';
 
 const ViewOne = () => {
 
@@ -26,18 +27,27 @@ const ViewOne = () => {
             .catch(err => console.log(err))
         navigate("/")
     }
+    //update
+    const updateRadTech = (e) => {
+        navigate(`/api/radtechs/edit/${id}`)
+    }
 
     return (
-        <div className="mt-5 mb-5 bg-white col-6 mx-auto p-2 border border-dark rounded">
-            <h2 className="text-info">Technologist Profile:</h2>
-            <h3 className="mt-4">{radTech.firstName} {radTech.lastName}</h3>
-            <p className="mt-4"><b>Preferred Modality:</b> {radTech.modality}</p>
-            <p className="mt-4"><b>First Shift Status:</b> {radTech.firstShiftStatus}</p>
-            <p className="mt-4"><b>Second Shift Status:</b> {radTech.secondShiftStatus}</p>
-            <p className="mt-4"><b>Third Shift Status:</b> {radTech.thirdShiftStatus}</p>
-            <a href="/" className=" btn btn-secondary mt-3">Home</a>
-            <a href={`http://localhost:3000/api/radtechs/edit/${radTech._id}`} className=" btn btn-info mt-3">Update</a>
-            <button className="btn btn-danger mt-3" onClick={deleteRadTech}>Delete</button>
+        <div>
+            <NavBar/>
+       
+            <div className="mt-5 mb-5 bg-white col-6 mx-auto p-2 border border-dark rounded">
+                <h2 className="text-info">Technologist Profile:</h2>
+                <h3 className="mt-4">{radTech.firstName} {radTech.lastName}</h3>
+                <p className="mt-4"><b>Preferred Modality:</b> {radTech.modality}</p>
+                <p className="mt-4"><b>First Shift Status:</b> {radTech.firstShiftStatus}</p>
+                <p className="mt-4"><b>Second Shift Status:</b> {radTech.secondShiftStatus}</p>
+                <p className="mt-4"><b>Third Shift Status:</b> {radTech.thirdShiftStatus}</p>
+                {/* <a href="/" className=" btn btn-secondary mt-3">Home</a> */}
+                {/* <a href={`http://localhost:3000/api/radtechs/edit/${radTech._id}`} className=" btn btn-info mt-3">Update</a> */}
+                <button className=" btn btn-info mt-3" onClick={(e) => updateRadTech(radTech._id)}>Update</button>
+                <button className="btn btn-danger mt-3" onClick={deleteRadTech}>Delete</button>
+            </div>
         </div>
     )
 }

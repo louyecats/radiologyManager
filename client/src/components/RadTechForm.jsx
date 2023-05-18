@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import {useNavigate} from 'react-router-dom'; //to refresh route after form completed and display created
 
@@ -51,10 +51,13 @@ const RadTechForm = () => {
         if (formValidator()) {
         //if passes validations above and returns true, then send post request to route w/create function and pass in radTech object data from useState function above, if passes log response or if fails log the error
             axios.post('http://localhost:8000/api/radtechs', radTech)
-                .then(res => console.log(res))
+                .then(res => {
+                    console.log(res.data.radTech._id);
+                    navigate(`/api/radtechs/${res.data.radTech._id}`)
+                })
                 .catch(err =>console.log(err))
                 setHasBeenSubmitted(true);
-                navigate("/")
+                // navigate('/')
         }
         else {
             setErrors({

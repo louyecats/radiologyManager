@@ -57,6 +57,15 @@ const Update = (props) => {
         if (radTech.modality.length < 2) {
             return false
         }
+        if (radTech.firstShiftStatus === "Undecided" || "Working" || "Not Working") {
+            return false
+        } 
+        if (radTech.secondShiftStatus === "Undecided" || "Working" || "Not Working") {
+            return false
+        } 
+        if (radTech.thirdShiftStatus === "Undecided" || "Working" || "Not Working") {
+            return false
+        } 
         return isValid
     }
 
@@ -100,9 +109,9 @@ const Update = (props) => {
                     <input type="text" name="thirdShiftStatus" id="thirdShiftStatus" className="form-control" value={radTech.thirdShiftStatus} onChange={onChangeHandler}/>
                     {errors.thirdShiftStatus ? <p className="text-danger">{errors.thirdShiftStatus}</p> : ""}
                 </div>
-
-                <button className="btn btn-secondary mt-3">Update Rad Tech</button>
+                    <button className="btn btn-warning mt-3">Update Rad Tech</button>
             </form>
+                <a href="/" className="btn btn-secondary mt-3 offset-6">Home</a>
         </div>
     )
 }
