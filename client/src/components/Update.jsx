@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useParams, useNavigate} from 'react-router-dom';
 import axios from 'axios';
+import NavBar from './NavBar';
 
 const Update = (props) => {
 
@@ -11,12 +12,16 @@ const Update = (props) => {
     //use axios get() to grab the specific id's object data from back-end/DB, then place in state to have access/display current values for user to update
     useEffect(() => {
         axios.get(`http://localhost:8000/api/radtechs/${id}`)
-            .then(res => setRadTech(res.data.radTech))
+            .then(res => {
+                console.log(res.data.radTech);
+                setRadTech(res.data.radTech);
+                })
             .catch(err => console.log(err))
     }, []); //always have empty dependency  array so runs get() when component mounts
 
     //when input form changes, this function is called, which calls the setRadTech function to put in state, passing in the spread operator to combine the getter radTech with the object of input name as a key and the input value as the value
     const onChangeHandler = (e) => {
+
         setRadTech({
             ...radTech,
             [e.target.name]: e.target.value
@@ -36,10 +41,7 @@ const Update = (props) => {
             setErrors({
                 firstName: "First name must be at least 2 characters",
                 lastName: "Last name must be at least 2 characters",
-                modality: "Modality must be at least 2 characters",
-                firstShiftStatus: "Status must be Undecided, Working or Not Working",
-                secondShiftStatus: "Status must be Undecided, Working or Not Working",
-                thirdShiftStatus: "Status must be Undecided, Working or Not Working"
+                modality: "Modality must be at least 2 characters"
             })
         }
     }
@@ -57,61 +59,141 @@ const Update = (props) => {
         if (radTech.modality.length < 2) {
             return false
         }
-        if (radTech.firstShiftStatus === "Undecided" || "Working" || "Not Working") {
-            return false
-        } 
-        if (radTech.secondShiftStatus === "Undecided" || "Working" || "Not Working") {
-            return false
-        } 
-        if (radTech.thirdShiftStatus === "Undecided" || "Working" || "Not Working") {
-            return false
-        } 
         return isValid
     }
 
     return (
-        <div className="mt-5 bg-white col-6 mx-auto p-3 border border-dark rounded">
-            <h2>Edit Rad Tech {radTech.firstName}:</h2>
-            <form action="" className="col md-6 mx-auto" onSubmit={submitHandler}>
-                <div className="form-group">
-                    <label htmlFor="firstName">First Name:</label>
-                    <input type="text" name="firstName" id="firstName" className="form-control" value={radTech.firstName} onChange={onChangeHandler}/>
-                    {/* firstName is important to match to connect to our state */}
-                    {errors.firstName ? <p className="text-danger">{errors.firstName}</p> : ""}
-                </div>
+        <div>
+            <NavBar/>
+            <div className="mt-5 bg-white col-6 mx-auto p-3 border border-dark rounded">
+                <h2>Edit Rad Tech {radTech.firstName}:</h2>
+                <form action="" className="col md-6 mx-auto" onSubmit={submitHandler}>
+                    <div className="form-group">
+                        <label htmlFor="firstName">First Name:</label>
+                        <input 
+                            type="text" 
+                            name="firstName" 
+                            id="firstName" 
+                            className="form-control" 
+                            value={radTech.firstName} 
+                            onChange={onChangeHandler}
+                        />
+                        {errors.firstName ? <p className="text-danger">{errors.firstName}</p> : ""}
+                    </div>
 
-                <div className="form-group">
-                    <label htmlFor="lastName">Last Name:</label>
-                    <input type="text" name="lastName" id="lastName" className="form-control" value={radTech.lastName} onChange={onChangeHandler}/>
-                    {errors.lastName ? <p className="text-danger">{errors.lastName}</p> : ""}
-                </div>
+                    <div className="form-group">
+                        <label htmlFor="lastName">Last Name:</label>
+                        <input 
+                            type="text" 
+                            name="lastName" 
+                            id="lastName" 
+                            className="form-control" 
+                            value={radTech.lastName} 
+                            onChange={onChangeHandler}
+                        />
+                        {errors.lastName ? <p className="text-danger">{errors.lastName}</p> : ""}
+                    </div>
 
-                <div className="form-group">
-                    <label htmlFor="modality">Preferred Modality:</label>
-                    <input type="text" name="modality" id="modality" className="form-control" value={radTech.modality} onChange={onChangeHandler}/>
-                    {errors.modality ? <p className="text-danger">{errors.modality}</p> : ""}
-                </div>
+                    <div className="form-group">
+                        <label htmlFor="modality">Preferred Modality:</label>
+                        <input 
+                            type="text" 
+                            name="modality" 
+                            id="modality" 
+                            className="form-control" 
+                            value={radTech.modality} 
+                            onChange={onChangeHandler}
+                        />
+                        {errors.modality ? <p className="text-danger">{errors.modality}</p> : ""}
+                    </div>
 
-                <div className="form-group">
-                    <label htmlFor="firstShiftStatus">First Shift Status:</label>
-                    <input type="text" name="firstShiftStatus" id="firstShiftStatus" className="form-control" value={radTech.firstShiftStatus} onChange={onChangeHandler}/>
-                    {errors.firstShiftStatus ? <p className="text-danger">{errors.firstShiftStatus}</p> : ""}
-                </div>
+                    <div className="form-group">
+                        <label htmlFor="firstShiftStatus">First Shift Status:</label>
+                        
+                        <input 
+                        type="checkbox" 
+                        name="firstShiftStatus" 
+                        id="firstShiftStatus" 
+                        checked={(radTech.firstShiftStatus === "Undecided")? true:false} 
+                        value="Undecided" 
+                        onChange={onChangeHandler}
+                        /> Undecided
 
-                <div className="form-group">
-                    <label htmlFor="secondShiftStatus">Second Shift Status:</label>
-                    <input type="text" name="secondShiftStatus" id="secondShiftStatus" className="form-control" value={radTech.secondShiftStatus} onChange={onChangeHandler}/>
-                    {errors.secondShiftStatus ? <p className="text-danger">{errors.secondShiftStatus}</p> : ""}
-                </div>
+                        <input 
+                        type="checkbox" 
+                        name="firstShiftStatus" 
+                        id="firstShiftStatus" 
+                        checked={(radTech.firstShiftStatus === "Working")? true:false} 
+                        value="Working" 
+                        onChange={onChangeHandler}
+                        /> Working
 
-                <div className="form-group">
-                    <label htmlFor="thirdShiftStatus">Third Shift Status:</label>
-                    <input type="text" name="thirdShiftStatus" id="thirdShiftStatus" className="form-control" value={radTech.thirdShiftStatus} onChange={onChangeHandler}/>
-                    {errors.thirdShiftStatus ? <p className="text-danger">{errors.thirdShiftStatus}</p> : ""}
-                </div>
-                    <button className="btn btn-warning mt-3">Update Rad Tech</button>
-            </form>
-                <a href="/" className="btn btn-secondary mt-3 offset-6">Home</a>
+                        <input 
+                            type="checkbox" 
+                            name="firstShiftStatus" 
+                            id="firstShiftStatus" 
+                            checked={(radTech.firstShiftStatus == "Not Working")? true:false} 
+                            value="Not Working" 
+                            onChange={onChangeHandler}
+                        />Not Working
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="secondShiftStatus">Second Shift Status:</label>
+
+                        <input 
+                            type="radio" 
+                            name="secondShiftStatus" 
+                            id="secondShiftStatus" 
+                            value="Undecided" 
+                            checked={radTech.secondShiftStatus === "Undecided"} 
+                            onChange={onChangeHandler}
+                        /> Undecided
+
+                        <input 
+                            type="radio" 
+                            name="secondShiftStatus" 
+                            id="secondShiftStatus" 
+                            value="Working" 
+                            checked={radTech.secondShiftStatus === "Working"} 
+                            onChange={onChangeHandler}
+                        /> Working
+
+                        <input 
+                            type="radio" 
+                            name="secondShiftStatus" 
+                            id="secondShiftStatus" 
+                            value="Not Working" 
+                            checked={radTech.secondShiftStatus === "Not Working"} 
+                            onChange={onChangeHandler}
+                        /> Not Working
+                    </div>
+
+                    <div className="form-group">
+                        <label htmlFor="thirdShiftStatus">Third Shift Status: 
+                            <select 
+                                name="thirdShiftStatus" 
+                                id="thirdShiftStatus" 
+                                onChange={onChangeHandler}>
+                                <option 
+                                    selected={(radTech.thirdShiftStatus == "Undecided")? "selected": null}
+                                    value="Undecided">Undecided
+                                </option>
+                                <option 
+                                    selected={(radTech.thirdShiftStatus == "Working")? "selected": null}
+                                    value="Working">Working
+                                </option>
+                                <option 
+                                    selected={(radTech.thirdShiftStatus == "Not Working")? "selected": null}
+                                    value="Not Working">Not Working
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <button className="btn btn-secondary mt-3">Update Rad Tech</button>
+                </form>
+            </div>
         </div>
     )
 }

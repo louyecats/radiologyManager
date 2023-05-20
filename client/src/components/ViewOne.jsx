@@ -46,7 +46,16 @@ const ViewOne = () => {
                 {/* <a href="/" className=" btn btn-secondary mt-3">Home</a> */}
                 {/* <a href={`http://localhost:3000/api/radtechs/edit/${radTech._id}`} className=" btn btn-info mt-3">Update</a> */}
                 <button className=" btn btn-info mt-3" onClick={(e) => updateRadTech(radTech._id)}>Update</button>
-                <button className="btn btn-danger mt-3" onClick={deleteRadTech}>Delete</button>
+                <button 
+                    className="btn btn-danger mt-3" 
+                    onClick={() => {
+                        const confirmDelete = window.confirm(
+                            "Do you really want to delete this Rad Tech?"
+                        )
+                        if (confirmDelete === true) {deleteRadTech()}
+                    }}>
+                    Delete
+                </button>
             </div>
         </div>
     )

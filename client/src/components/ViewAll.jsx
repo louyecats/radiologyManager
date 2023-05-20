@@ -54,7 +54,16 @@ const ViewAll = () => {
                             <td colSpan="2">
 
                                 <a href={`http://localhost:3000/api/radtechs/${tech._id}`} className=" btn btn-secondary">View</a>
-                                <button className="btn btn-danger" onClick={(e) => deleteRadTech(tech._id)}>Delete</button>
+
+                                <button 
+                                    className="btn btn-danger" onClick={(e) => {
+                                        const confirmDelete = window.confirm(
+                                            "Do you really want to delete this Rad Tech?"
+                                        )
+                                        if (confirmDelete === true) {deleteRadTech(tech._id)}
+                                    }}>
+                                    Delete
+                                </button>
                                 {/* you MUST have onclick={(e)=> before the delete function or when you click the delete button, javascript will auto select all buttons and delete everyone! */}
                             </td>
                         </tr>
